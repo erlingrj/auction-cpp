@@ -1,4 +1,5 @@
 #include "Auction.hpp"
+#include <experimental/filesystem>
 #include <iostream>
 
 using namespace std;
@@ -15,10 +16,28 @@ int main() {
        {56,  10,  45,  39,   0,  93,  67,  79,  19,  38},
        {27,   0,  39,  53,  46,  24,  69,  46,  23,  1}
     };
+
+
     int epsilon = 1;
     std::vector<int> object_assignments = auction(reward_matrix, epsilon);
     cout << "done" <<endl;
     print_vector(object_assignments); cout <<endl;
+
+
+    string path = "resources/test_problems8bit";
+    for (const auto & entry : experimental::filesystem::directory_iterator(path)) {
+        auto p = string(entry.path().string());
+        auto rew = parse_csv(p);
+        cout <<p <<endl;
+        for (auto r: rew) {
+           print_vector(r); cout <<endl;
+        }
+
+        auto object_assignments = auction(rew,epsilon);
+        cout <<"Object assignment" <<endl;
+        print_vector(object_assignments);; cout<<endl;
+    }
+
 
 
 

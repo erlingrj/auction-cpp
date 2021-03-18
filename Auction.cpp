@@ -22,6 +22,14 @@ void print_queue(deque<int> &q) {
 
 
 template <typename T>
+void print_matrix(std::vector<std::vector<T>> &m) {
+    for (auto row: m) {
+        print_vector<T>(row); cout<<endl;
+    }
+}
+
+
+template <typename T>
 vector<size_t> sort_indices(const vector<T> &v) {
     // initialize original index locations
     vector<size_t> idx(v.size());
@@ -86,8 +94,10 @@ vector<int> auction(vector<vector<int> > rewards, int epsilon) {
         // Step 2: Find the two objects with the highest benefit
         vector<size_t> benefit_indices_sorted = sort_indices(benefits);
         int highest_idx = benefit_indices_sorted[0];
-        int sec_highest_idx = benefit_indices_sorted[1];
-
+        int sec_highest_idx = 0;
+        if (benefit_indices_sorted.size() > 1) {
+            sec_highest_idx = benefit_indices_sorted[1];
+        }
         if (benefits[highest_idx] <= 0) {
             #ifdef DEBUG
                 cout << "No benefit found" <<endl;
@@ -103,7 +113,7 @@ vector<int> auction(vector<vector<int> > rewards, int epsilon) {
         int old_owner = object_assignments[highest_idx];
         int old_price = prices[highest_idx];
         int price_delta;
-        if (benefits[sec_highest_idx] >= 0) {
+        if (benefits[sec_highest_idx] >= 0 && benefit_indices_sorted.size() > 1) {
             price_delta = benefits[highest_idx] - benefits[sec_highest_idx];
             if (price_delta == 0) {
                 price_delta += epsilon;
@@ -132,3 +142,38 @@ vector<int> auction(vector<vector<int> > rewards, int epsilon) {
 }
 
 
+#include <fstream>
+#include <string>
+vector<int> parse_line(string s){
+    vector<int> res;
+	string temp = "";
+	for(int i=0;i<s.length();++i){
+		
+		if(s[i]==','){
+			res.push_back(stoi(temp));
+			temp = "";
+		}
+		else{
+			temp.push_back(s[i]);
+		}
+		
+	}
+	res.push_back(stoi(temp));
+    return res;
+	
+}
+
+vector<vector<int>> parse_csv(std::string path) {
+    fstream f;
+    vector<std::vector<int>> res;
+    f.open(path, ios::in);
+    if (f.is_open()) {
+        string line;
+        while(getline(f, line)) {
+            res.push_back(parse_line(line));
+        } 
+    } else {
+        throw;
+    }
+    return res;
+}

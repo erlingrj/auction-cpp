@@ -1,7 +1,7 @@
 #include "Auction.hpp"
 #include <experimental/filesystem>
 #include <iostream>
-
+#include "utils.hpp"
 using namespace std;
 int main() {
     std::vector<std::vector<int> > reward_matrix {

@@ -7,8 +7,8 @@
 
 using namespace std;
 
-template <typename T>
-void print_vector(vector<T> &v) {
+
+void print_vector(vector<int> &v) {
     for (auto a: v) {
         cout <<a <<", ";
     }
@@ -21,10 +21,9 @@ void print_queue(deque<int> &q) {
 }
 
 
-template <typename T>
-void print_matrix(std::vector<std::vector<T>> &m) {
+void print_matrix(std::vector<std::vector<int>> &m) {
     for (auto row: m) {
-        print_vector<T>(row); cout<<endl;
+        print_vector(row); cout<<endl;
     }
 }
 

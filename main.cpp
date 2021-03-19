@@ -29,9 +29,9 @@ int main() {
         auto p = string(entry.path().string());
         auto rew = parse_csv(p);
         cout <<p <<endl;
-        for (auto r: rew) {
-           print_vector(r); cout <<endl;
-        }
+        //for (auto r: rew) {
+        ///   print_vector(r); cout <<endl;
+        //}
 
         auto object_assignments = auction(rew,epsilon);
         cout <<"Object assignment" <<endl;

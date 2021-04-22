@@ -36,3 +36,26 @@ vector<vector<int>> parse_csv(std::string path) {
     }
     return res;
 }
+
+int align_to_rows(std::vector<std::vector<int>> rew, uint8_t *buf) {
+  int buf_idx = 0;
+
+  const int bytesPerMemWord = 8;
+
+
+  for (int i = 0; i< rew.size(); i++) {
+    for(int j = 0; j< rew[i].size(); j++) {
+      buf[buf_idx++] = rew[i][j];
+    }
+    // After a row is finished, pad on zeros. We check the remainder of the index
+    int pads_needed = bytesPerMemWord - buf_idx % bytesPerMemWord;
+    if (pads_needed > 8) {
+      for (int k = 0; k<pads_needed; k++) {
+        buf[buf_idx++] = 0x00;
+      }
+    } else {
+      // We are good, the row is already aligned (its 8x8 or 16x16 ...)
+    }
+  }
+  return buf_idx;
+}

@@ -49,7 +49,7 @@ int align_to_rows(std::vector<std::vector<int>> rew, uint8_t *buf) {
     }
     // After a row is finished, pad on zeros. We check the remainder of the index
     int pads_needed = bytesPerMemWord - buf_idx % bytesPerMemWord;
-    if (pads_needed > 8) {
+    if (pads_needed < 8) {
       for (int k = 0; k<pads_needed; k++) {
         buf[buf_idx++] = 0x00;
       }

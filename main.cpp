@@ -39,7 +39,16 @@ int main() {
     }
 
 
+    uint8_t buffer[1024];
+    int size = align_to_rows(reward_matrix, (uint8_t *) &buffer);
 
+    cout <<"Size = " <<size <<endl;
 
+    for (int i = 0; i < 20; i++) {
+      for (int j=0; j<8; j++) {
+        cout <<(int) buffer[i*8 + j] <<" ";
+      }
+      cout <<endl;
+    }
     return 0;
 }

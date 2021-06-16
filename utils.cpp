@@ -59,3 +59,14 @@ int align_to_rows(std::vector<std::vector<int>> rew, uint8_t *buf) {
   }
   return buf_idx;
 }
+
+
+int allocate_reward(std::vector<std::vector<int>> rew, uint64_t *buf) {
+  int buf_idx = 0;
+  for (int i = 0; i< rew.size(); i++) {
+    for(int j = 0; j< rew[i].size(); j++) {
+      buf[buf_idx++] = rew[i][j];
+    }
+  }
+   return buf_idx;
+}
